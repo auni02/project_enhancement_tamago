@@ -62,7 +62,7 @@ class RegisteredUserController extends Controller
     Auth::logout();
 
     // redirect with message that will show on login page
-    return redirect()->route('login')->with('status', 'Your account has been successfully registered. Please wait for approval. You will receive an email once approved.');
+    return redirect()->route('login')->with('status', 'Your account has been successfully registered. Approval may take 2–3 days. If the issue persists, feel free to contact us by email or phone.');
 }
 
 }

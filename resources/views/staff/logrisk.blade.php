@@ -27,7 +27,7 @@
 
         {{-- Problem Description --}}
         <div>
-            <label for="problem_description" class="block text-lg font-medium text-gray-800 mb-2">📝 Problem Description</label>
+            <label for="problem_description" class="block text-lg font-medium text-gray-800 mb-2">📝 Impact of the risk</label>
             <textarea name="problem_description" id="problem_description" rows="4" class="w-full rounded-xl border border-gray-300 p-3 bg-white shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-300" required></textarea>
         </div>
 

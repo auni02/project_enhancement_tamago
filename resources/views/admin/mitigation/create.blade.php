@@ -37,7 +37,7 @@
             </div>
 
             <div class="mb-4">
-                <label for="solution_details" class="form-label fw-semibold text-secondary">Solution Details</label>
+                <label for="solution_details" class="form-label fw-semibold text-secondary">Suggestions</label>
                 <textarea name="solution_details" rows="3"
                           class="form-control border-success border-2 shadow-sm"
                           placeholder="Explain your solution proposal..."></textarea>
