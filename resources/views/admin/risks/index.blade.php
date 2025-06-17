@@ -73,11 +73,33 @@
                     <small class="text-muted">{{ \Carbon\Carbon::parse($risk->reported_date)->format('d M Y') }}</small>
                 </div>
                 <div class="mt-3 mt-md-0">
-                    <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#riskModal{{ $risk->id }}"
-                        title="Open evaluation form to rate this risk" data-bs-toggle="tooltip">
-                        <i class="bi bi-pencil-square"></i> Evaluate
-                    </button>
-                </div>
+    {{-- Evaluate button (always visible) --}}
+    <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#riskModal{{ $risk->id }}"
+        title="Open evaluation form to rate this risk" data-bs-toggle="tooltip">
+        <i class="bi bi-pencil-square"></i> Evaluate
+    </button>
+
+    {{-- EDIT BUTTON --}}
+@can('update', $risk)
+    <a href="{{ route('admin.risks.edit', $risk->id) }}" class="btn btn-warning btn-sm mt-1">
+        <i class="bi bi-pencil"></i> Edit
+    </a>
+@endcan
+
+{{-- DELETE BUTTON --}}
+@can('delete', $risk)
+    <form method="POST" action="{{ route('admin.risks.destroy', $risk->id) }}" class="d-inline">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-danger btn-sm mt-1">
+            <i class="bi bi-trash"></i> Delete
+        </button>
+    </form>
+@endcan
+
+</div>
+
+
             </div>
         </div>
 
@@ -173,6 +195,7 @@ document.addEventListener('DOMContentLoaded', function () {
             html: true  // ✅ Enable HTML in tooltips
         });
     });
+
 });
 
 </script>

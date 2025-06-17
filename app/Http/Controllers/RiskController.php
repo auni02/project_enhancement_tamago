@@ -87,6 +87,11 @@ class RiskController extends Controller
         ->with('calculated_level', $riskLevel)
         ->with('success', 'Evaluation saved. Please complete risk mitigation details.');
 }
+public function update(Request $request, Risk $risk)
+{
+    $this->authorize('update', $risk);
+
+}
 
 
 }

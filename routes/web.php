@@ -65,6 +65,11 @@ Route::post('/superadmin/reject-user/{user}', function (User $user) {
         Route::get('/staff/logrisk', [RiskController::class, 'create'])->name('staff.logrisk');
         Route::post('/staff/logrisk', [RiskController::class, 'store'])->name('staff.logrisk.store');
         Route::get('/admin/risks', [RiskController::class, 'indexForAdmin'])->name('admin.risks.index');
+        // Edit & update a risk
+        Route::get   ('/admin/risks/{risk}/edit',   [RiskController::class, 'edit' ])->name('admin.risks.edit');
+        Route::put   ('/admin/risks/{risk}',        [RiskController::class, 'update'])->name('admin.risks.update');
+        // Delete a risk
+        Route::delete('/admin/risks/{risk}',        [RiskController::class, 'destroy'])->name('admin.risks.destroy');
         Route::get('/staff/tasks', [\App\Http\Controllers\Staff\TaskController::class, 'index'])->name('staff.tasks.my_task');
         Route::post('/staff/tasks/{task}/update', [\App\Http\Controllers\Staff\TaskController::class, 'update'])->name('staff.tasks.update');
         Route::put('/staff/tasks/{id}', [\App\Http\Controllers\Staff\TaskController::class, 'update'])->name('staff.tasks.update');
@@ -129,5 +134,7 @@ Route::get('/admin/completed-tasks', [App\Http\Controllers\Admin\TaskController:
 Route::get('/admin/completed-tasks', [RiskMitigationController::class, 'completed'])->name('admin.tasks.completed');
 
 });
+
+Route::get('/test‑csp', fn()=>'CSP test');
 
 require __DIR__.'/auth.php';
