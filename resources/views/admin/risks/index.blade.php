@@ -79,12 +79,6 @@
         <i class="bi bi-pencil-square"></i> Evaluate
     </button>
 
-    {{-- EDIT BUTTON --}}
-@can('update', $risk)
-    <a href="{{ route('admin.risks.edit', $risk->id) }}" class="btn btn-warning btn-sm mt-1">
-        <i class="bi bi-pencil"></i> Edit
-    </a>
-@endcan
 
 {{-- DELETE BUTTON --}}
 @can('delete', $risk)

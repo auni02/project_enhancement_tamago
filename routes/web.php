@@ -8,6 +8,8 @@ use App\Http\Controllers\RiskController;
 use App\Http\Controllers\RiskMitigationController;
 use App\Http\Controllers\Admin\RiskEvaluationController;
 use App\Http\Controllers\SuperAdminController;
+use App\Http\Controllers\StaffDashboardController;
+use App\Http\Controllers\ChatController;
 
 Route::get('/superadmin/dashboard', [SuperAdminController::class, 'dashboard'])
     ->middleware('auth') // if you use auth
@@ -134,6 +136,14 @@ Route::get('/admin/completed-tasks', [App\Http\Controllers\Admin\TaskController:
 Route::get('/admin/completed-tasks', [RiskMitigationController::class, 'completed'])->name('admin.tasks.completed');
 
 });
+
+
+
+Route::get('/staff/dashboard', [StaffDashboardController::class, 'index'])->name('staff.dashboard');
+Route::post('/chat/send', [ChatController::class, 'send'])->name('chat.send');
+
+
+
 
 Route::get('/test‑csp', fn()=>'CSP test');
 
