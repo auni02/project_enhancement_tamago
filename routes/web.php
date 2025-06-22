@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\RiskEvaluationController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\StaffDashboardController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\AdminDashboardController;
 
 Route::get('/superadmin/dashboard', [SuperAdminController::class, 'dashboard'])
     ->middleware('auth') // if you use auth
@@ -52,10 +53,15 @@ Route::post('/superadmin/reject-user/{user}', function (User $user) {
 })->name('reject.user');
 
     // Admin dashboard
-    Route::get('/admin/dashboard', function () {
-        checkRole('admin');  // ✅ Role check here for admin
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+    //Route::get('/admin/dashboard', function () {
+     //   checkRole('admin');  // ✅ Role check here for admin
+       // return view('admin.dashboard');
+    //})->name('admin.dashboard');
+
+    Route::get('/admin/dashboard', [\App\Http\Controllers\AdminDashboardController::class, 'index'])
+    ->middleware(['auth'])
+    ->name('admin.dashboard');
+
 
     // Staff dashboard
     Route::get('/staff/dashboard', function () {

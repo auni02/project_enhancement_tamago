@@ -9,15 +9,19 @@ class StaffDashboardController extends Controller
 {
     public function index()
     {
-        checkRole('staff'); // ✅ still apply your role check here
+        $userId = auth()->id();
+    $adminId = 1;                       // change to your real admin/super-admin id
+    $messages = Message::where(function($q) use ($userId,$adminId){
+            $q->where('from_user_id',$userId)->where('to_user_id',$adminId);
+        })->orWhere(function($q) use ($userId,$adminId){
+            $q->where('from_user_id',$adminId)->where('to_user_id',$userId);
+        })
+        ->with('sender')
+        ->orderBy('created_at')
+        ->get();
 
-        $messages = \App\Models\Message::where('from_user_id', auth()->id())
-                    ->orWhere('to_user_id', auth()->id())
-                    ->with('sender')
-                    ->orderBy('created_at')
-                    ->get();
-
-        return view('staff.dashboard', compact('messages'));
+    $targetId = $adminId;               // pass to hidden field
+    return view('staff.dashboard', compact('messages','targetId'));
     }
 
 }

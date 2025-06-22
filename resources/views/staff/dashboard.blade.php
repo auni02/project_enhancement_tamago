@@ -55,28 +55,46 @@
         <p class="text-sm">You can always update your task status and solution from the "Assigned Tasks" section. Stay proactive!</p>
     </div>
 
-    <div class="container">
-    <h4>Chat with Admin</h4>
+    {{-- ✨ Chatbox – copy this whole block into your dashboard view --}}
+<div class="card shadow-sm mb-4" style="max-height:400px;display:flex;flex-direction:column;">
+    <div class="card-header bg-primary text-black p-2 d-flex align-items-center">
+        <strong class="flex-grow-1" >Team Chat</strong>
+    </div>
 
-    <form method="POST" action="{{ route('chat.send') }}">
-        @csrf
-        <input type="hidden" name="to_user_id" value="1"> {{-- Admin user ID --}}
-        <div class="mb-3">
-            <textarea name="message" class="form-control" placeholder="Type your message..."></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Send</button>
-    </form>
-
-    <hr>
-
-    <div class="chat-box" style="height: 300px; overflow-y: scroll;">
+    {{-- chat scroll area --}}
+    <div id="chat-scroll" class="p-3 flex-grow-1 overflow-auto" style="background:#5e6266;">
         @foreach($messages as $msg)
-            <div class="mb-2">
-                <strong>{{ $msg->sender->name }}:</strong> {{ $msg->message }}
-                <br><small class="text-muted">{{ $msg->created_at->diffForHumans() }}</small>
+            @php
+                $isMe = $msg->from_user_id === auth()->id();
+            @endphp
+            <div class="d-flex mb-2 {{ $isMe ? 'justify-content-end' : 'justify-content-start' }}">
+                <div class="px-3 py-2 rounded-3
+                    {{ $isMe ? 'bg-success text-white' : 'bg-light border' }}"
+                     style="max-width:70%;">
+                    <small class="fw-bold">{{ $msg->sender->name }}</small><br>
+                    {{ $msg->message }}
+                    <div class="text-muted small text-end">{{ $msg->created_at->diffForHumans() }}</div>
+                </div>
             </div>
         @endforeach
     </div>
+
+    {{-- send form --}}
+    <form action="{{ route('chat.send') }}" method="POST" class="d-flex border-top">
+        @csrf
+        <input type="hidden" name="to_user_id" value="{{ $targetId ?? 1 }}"> {{-- default admin id --}}
+        <input name="message" class="form-control border-0" placeholder="Type a message…" required>
+        <button class="btn btn-primary rounded-0 px-4" type="submit">Send</button>
+    </form>
 </div>
+
+{{-- auto-scroll to newest --}}
+@push('scripts')
+<script>
+    const chatBox = document.getElementById('chat-scroll');
+    if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
+</script>
+@endpush
+
 </div>
 @endsection
